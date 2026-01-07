@@ -9,66 +9,67 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
-  const getIcon = (iconType: string) => {
-    switch (iconType) {
-      case 'dashboard':
-        return <FiHome size={20} />
-      case 'create':
-        return <FiFileText size={20} />
-      case 'history':
-        return <FiHistory size={20} />
-      default:
-        return <FiHome size={20} />
-    }
-  }
-
-  const navItems = [
-    {
-      id: 'dashboard',
-      label: 'Dashboard',
-      description: 'Overview and quick actions',
-    },
-    {
-      id: 'create',
-      label: 'Create Policy',
-      description: 'New policy creation',
-    },
-    {
-      id: 'history',
-      label: 'Policy History',
-      description: 'View past policies',
-    },
-  ]
-
   return (
     <aside className="w-64 border-r border-gray-200 bg-white">
       <div className="sticky top-16 h-[calc(100vh-64px)] flex flex-col overflow-y-auto">
         {/* Navigation Items */}
         <nav className="flex-1 space-y-1 px-3 py-4">
-          {navItems.map((item) => {
-            const isActive = currentPage === (item.id as any)
+          {/* Dashboard Item */}
+          <button
+            onClick={() => onNavigate('dashboard')}
+            className={`w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all duration-200 ${
+              currentPage === 'dashboard'
+                ? 'bg-blue-50 border-l-4 border-l-blue-600 text-blue-600'
+                : 'text-gray-700 hover:bg-gray-50'
+            }`}
+          >
+            <div className="flex items-center gap-3 flex-1">
+              <FiHome size={20} />
+              <div className="text-left">
+                <p className="text-sm font-medium">Dashboard</p>
+                <p className="text-xs text-gray-500">Overview and quick actions</p>
+              </div>
+            </div>
+            {currentPage === 'dashboard' && <FiChevronRight size={18} />}
+          </button>
 
-            return (
-              <button
-                key={item.id}
-                onClick={() => onNavigate(item.id as any)}
-                className={`w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all duration-200 ${
-                  isActive
-                    ? 'bg-blue-50 border-l-4 border-l-blue-600 text-blue-600'
-                    : 'text-gray-700 hover:bg-gray-50'
-                }`}
-              >
-                <div className="flex items-center gap-3 flex-1">
-                  {getIcon(item.id)}
-                  <div className="text-left">
-                    <p className="text-sm font-medium">{item.label}</p>
-                    <p className="text-xs text-gray-500">{item.description}</p>
-                  </div>
-                </div>
-                {isActive && <FiChevronRight size={18} />}
-              </button>
-            )
-          })}
+          {/* Create Policy Item */}
+          <button
+            onClick={() => onNavigate('create')}
+            className={`w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all duration-200 ${
+              currentPage === 'create'
+                ? 'bg-blue-50 border-l-4 border-l-blue-600 text-blue-600'
+                : 'text-gray-700 hover:bg-gray-50'
+            }`}
+          >
+            <div className="flex items-center gap-3 flex-1">
+              <FiFileText size={20} />
+              <div className="text-left">
+                <p className="text-sm font-medium">Create Policy</p>
+                <p className="text-xs text-gray-500">New policy creation</p>
+              </div>
+            </div>
+            {currentPage === 'create' && <FiChevronRight size={18} />}
+          </button>
+
+          {/* History Item */}
+          <button
+            onClick={() => onNavigate('history')}
+            className={`w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all duration-200 ${
+              currentPage === 'history'
+                ? 'bg-blue-50 border-l-4 border-l-blue-600 text-blue-600'
+                : 'text-gray-700 hover:bg-gray-50'
+            }`}
+          >
+            <div className="flex items-center gap-3 flex-1">
+              <FiHistory size={20} />
+              <div className="text-left">
+                <p className="text-sm font-medium">Policy History</p>
+                <p className="text-xs text-gray-500">View past policies</p>
+              </div>
+            </div>
+            {currentPage === 'history' && <FiChevronRight size={18} />}
+          </button>
         </nav>
 
         {/* Divider */}
