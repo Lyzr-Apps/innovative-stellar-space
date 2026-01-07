@@ -9,23 +9,33 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
+  const getIcon = (iconType: string) => {
+    switch (iconType) {
+      case 'dashboard':
+        return <FiHome size={20} />
+      case 'create':
+        return <FiFileText size={20} />
+      case 'history':
+        return <FiHistory size={20} />
+      default:
+        return <FiHome size={20} />
+    }
+  }
+
   const navItems = [
     {
       id: 'dashboard',
       label: 'Dashboard',
-      icon: FiHome,
       description: 'Overview and quick actions',
     },
     {
       id: 'create',
       label: 'Create Policy',
-      icon: FiFileText,
       description: 'New policy creation',
     },
     {
       id: 'history',
       label: 'Policy History',
-      icon: FiHistory,
       description: 'View past policies',
     },
   ]
@@ -36,7 +46,6 @@ export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
         {/* Navigation Items */}
         <nav className="flex-1 space-y-1 px-3 py-4">
           {navItems.map((item) => {
-            const Icon = item.icon
             const isActive = currentPage === (item.id as any)
 
             return (
@@ -50,7 +59,7 @@ export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
                 }`}
               >
                 <div className="flex items-center gap-3 flex-1">
-                  <Icon size={20} />
+                  {getIcon(item.id)}
                   <div className="text-left">
                     <p className="text-sm font-medium">{item.label}</p>
                     <p className="text-xs text-gray-500">{item.description}</p>
