@@ -2,7 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =============================================================================
+   HR POLICY MANAGER - GLOBAL STYLES
+   ============================================================================= */
+
 /* Custom styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,34 +22,67 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f5f5f5;
+}
+
+/* =============================================================================
+   8PT GRID SYSTEM & SPACING
+   ============================================================================= */
+
+:root {
+  --grid-size: 8px;
+  --spacing-1: 8px;
+  --spacing-2: 16px;
+  --spacing-3: 24px;
+  --spacing-4: 32px;
+  --spacing-5: 40px;
+  --spacing-6: 48px;
 }
 
 @layer base {
   :root {
+    /* Background & Foreground */
     --background: 0 0% 100%;
-    --foreground: 224 71.4% 4.1%;
+    --foreground: 210 9% 20%;
     --card: 0 0% 100%;
-    --card-foreground: 224 71.4% 4.1%;
+    --card-foreground: 210 9% 20%;
     --popover: 0 0% 100%;
-    --popover-foreground: 224 71.4% 4.1%;
-    --primary: 220.9 39.3% 11%;
-    --primary-foreground: 210 20% 98%;
-    --secondary: 220 14.3% 95.9%;
-    --secondary-foreground: 220.9 39.3% 11%;
-    --muted: 220 14.3% 95.9%;
-    --muted-foreground: 220 8.9% 46.1%;
-    --accent: 220 14.3% 95.9%;
-    --accent-foreground: 220.9 39.3% 11%;
+    --popover-foreground: 210 9% 20%;
+
+    /* Primary: Blue-Gray (#1e3a5f, #2d5a8c) */
+    --primary: 215 43% 27%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary: Gray tones */
+    --secondary: 210 5% 92%;
+    --secondary-foreground: 210 9% 20%;
+
+    /* Muted: Light grays */
+    --muted: 210 5% 92%;
+    --muted-foreground: 210 5% 40%;
+
+    /* Accent: Teal (#0a9396) */
+    --accent: 177 87% 31%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Status Colors */
+    --success: 142 72% 29%;
+    --warning: 38 92% 50%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 20% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 224 71.4% 4.1%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+
+    /* Border & Input */
+    --border: 210 5% 88%;
+    --input: 210 5% 88%;
+    --ring: 215 43% 27%;
+
+    /* Chart colors */
+    --chart-1: 215 43% 27%;
+    --chart-2: 177 87% 31%;
+    --chart-3: 38 92% 50%;
+    --chart-4: 142 72% 29%;
+    --chart-5: 0 84.2% 60.2%;
+
     --radius: 0.5rem;
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;

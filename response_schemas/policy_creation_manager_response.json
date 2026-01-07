@@ -1,0 +1,38 @@
+{
+  "agent_name": "Policy Creation Manager",
+  "agent_id": "695e154d52ab53b7bf377c15",
+  "agent_purpose": "Orchestrates the policy creation workflow and coordinates between discovery, generation, and compliance validation agents",
+  "description": "Manager agent that receives policy creation requests and orchestrates the workflow",
+  "response_schema": {
+    "status": "string (success|error)",
+    "result": {
+      "response": "string",
+      "action_taken": "string (optional)",
+      "data": "object (optional, any structured data)",
+      "suggestions": [
+        "string (optional)"
+      ]
+    },
+    "metadata": {
+      "agent_name": "string",
+      "timestamp": "string (ISO)"
+    }
+  },
+  "example_response": {
+    "status": "success",
+    "result": {
+      "response": "I've completed the task you requested",
+      "action_taken": "Processed the input and generated output",
+      "data": {
+        "key": "value"
+      },
+      "suggestions": [
+        "You might also want to try X"
+      ]
+    },
+    "metadata": {
+      "agent_name": "Policy Creation Manager",
+      "timestamp": "2025-01-15T10:30:00Z"
+    }
+  }
+}

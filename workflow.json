@@ -1,0 +1,202 @@
+{
+  "workflow_name": "HR Policy Manager",
+  "workflow_description": "Complete HR policy creation workflow with discovery, generation, and compliance validation",
+  "nodes": [
+    {
+      "id": "input_node",
+      "type": "Input",
+      "label": "Policy Creation Request",
+      "nodeCategory": "input"
+    },
+    {
+      "id": "manager_agent",
+      "type": "Agent",
+      "label": "Policy Creation Manager",
+      "nodeCategory": "agent",
+      "agent_id": "695e154d52ab53b7bf377c15",
+      "role": "HR Policy Orchestration Manager"
+    },
+    {
+      "id": "discovery_agent",
+      "type": "Agent",
+      "label": "Policy Discovery Agent",
+      "nodeCategory": "agent",
+      "agent_id": "695e154732e7bb62a51c839b",
+      "role": "HR Consultant Discovery Specialist"
+    },
+    {
+      "id": "generator_agent",
+      "type": "Agent",
+      "label": "Policy Generator Agent",
+      "nodeCategory": "agent",
+      "agent_id": "695e154728a3f341188e00dc",
+      "role": "Expert HR Policy Drafter",
+      "has_knowledge_base": true,
+      "knowledge_base": {
+        "rag_id": "695e1539bb92cd00acf848b9",
+        "rag_name": "companyguidelineswetm",
+        "name": "Company Guidelines"
+      }
+    },
+    {
+      "id": "compliance_agent",
+      "type": "Agent",
+      "label": "Compliance Checker Agent",
+      "nodeCategory": "agent",
+      "agent_id": "695e154752ab53b7bf377c14",
+      "role": "Expert Compliance Officer"
+    },
+    {
+      "id": "output_node",
+      "type": "Output",
+      "label": "Final Compliant Policy Output",
+      "nodeCategory": "end"
+    }
+  ],
+  "edges": [
+    {
+      "source": "input_node",
+      "target": "manager_agent",
+      "label": "Policy creation request"
+    },
+    {
+      "source": "manager_agent",
+      "target": "discovery_agent",
+      "label": "Delegate discovery"
+    },
+    {
+      "source": "manager_agent",
+      "target": "generator_agent",
+      "label": "Delegate generation"
+    },
+    {
+      "source": "manager_agent",
+      "target": "compliance_agent",
+      "label": "Delegate compliance check"
+    },
+    {
+      "source": "discovery_agent",
+      "target": "manager_agent",
+      "label": "Return requirements"
+    },
+    {
+      "source": "generator_agent",
+      "target": "manager_agent",
+      "label": "Return draft policy"
+    },
+    {
+      "source": "compliance_agent",
+      "target": "manager_agent",
+      "label": "Return compliance report"
+    },
+    {
+      "source": "manager_agent",
+      "target": "output_node",
+      "label": "Final policy with compliance"
+    }
+  ],
+  "workflow_pattern": "Manager-SubAgent Pattern",
+  "manager_agent": {
+    "id": "695e154d52ab53b7bf377c15",
+    "name": "Policy Creation Manager",
+    "description": "Orchestrates the policy creation workflow, coordinates between discovery, generation, and compliance agents, aggregates final compliant policy output",
+    "model": "gpt-4o",
+    "temperature": 0.3,
+    "top_p": 1,
+    "managed_agents": [
+      {
+        "id": "695e154732e7bb62a51c839b",
+        "name": "Policy Discovery Agent"
+      },
+      {
+        "id": "695e154728a3f341188e00dc",
+        "name": "Policy Generator Agent"
+      },
+      {
+        "id": "695e154752ab53b7bf377c14",
+        "name": "Compliance Checker Agent"
+      }
+    ]
+  },
+  "sub_agents": [
+    {
+      "id": "695e154732e7bb62a51c839b",
+      "name": "Policy Discovery Agent",
+      "description": "Conducts structured conversation to understand policy type, scope, stakeholders, key provisions, and edge cases needed",
+      "role": "HR Consultant Discovery Specialist",
+      "model": "gpt-4o",
+      "temperature": 0.6,
+      "top_p": 0.95,
+      "responsibilities": [
+        "Ask clear, focused questions about policy requirements",
+        "Probe policy type, target audience, scope, key provisions, edge cases",
+        "Build comprehensive requirements profile",
+        "Summarize requirements periodically",
+        "Keep conversation efficient (5-7 exchanges)",
+        "Format final requirements as structured summary"
+      ]
+    },
+    {
+      "id": "695e154728a3f341188e00dc",
+      "name": "Policy Generator Agent",
+      "description": "Creates comprehensive policy document based on discovered requirements and company guidelines from knowledge base",
+      "role": "Expert HR Policy Drafter",
+      "model": "gpt-4o",
+      "temperature": 0.5,
+      "top_p": 0.95,
+      "knowledge_base": {
+        "rag_id": "695e1539bb92cd00acf848b9",
+        "rag_name": "companyguidelineswetm",
+        "name": "Company Guidelines",
+        "description": "Corporate HR policy guidelines and standards that ensure organizational consistency across all HR policies"
+      },
+      "responsibilities": [
+        "Receive requirements profile from Discovery Agent",
+        "Access company guidelines from knowledge base",
+        "Create detailed professional HR policy document",
+        "Format with clear sections and numbered provisions",
+        "Ensure all discovered requirements incorporated",
+        "Present in publication-ready format"
+      ]
+    },
+    {
+      "id": "695e154752ab53b7bf377c14",
+      "name": "Compliance Checker Agent",
+      "description": "Validates generated policy against labor laws, industry regulations, and internal compliance standards, flags issues and suggests corrections",
+      "role": "Expert Compliance Officer",
+      "model": "gpt-4o",
+      "temperature": 0.2,
+      "top_p": 1,
+      "responsibilities": [
+        "Review generated policy document thoroughly",
+        "Validate against federal/state labor laws and regulations",
+        "Identify compliance gaps and risks",
+        "Flag problematic provisions",
+        "Suggest specific corrections",
+        "Provide compliance score",
+        "Generate structured compliance report"
+      ]
+    }
+  ],
+  "knowledge_bases": [
+    {
+      "rag_id": "695e1539bb92cd00acf848b9",
+      "rag_name": "companyguidelineswetm",
+      "name": "Company Guidelines",
+      "description": "Corporate HR policy guidelines and standards that ensure organizational consistency across all HR policies",
+      "used_by": ["Policy Generator Agent"]
+    }
+  ],
+  "workflow_flow": {
+    "step_1": "User initiates policy creation request",
+    "step_2": "Policy Creation Manager receives request",
+    "step_3": "Manager delegates to Policy Discovery Agent for structured discovery conversation",
+    "step_4": "Discovery Agent gathers requirements (policy type, scope, stakeholders, provisions, edge cases)",
+    "step_5": "Manager delegates to Policy Generator Agent with discovered requirements",
+    "step_6": "Generator Agent creates comprehensive policy using company guidelines knowledge base",
+    "step_7": "Manager delegates to Compliance Checker Agent with generated policy",
+    "step_8": "Compliance Agent validates against labor laws and regulations",
+    "step_9": "Manager aggregates policy and compliance report",
+    "step_10": "Final compliant policy output delivered to user"
+  }
+}

@@ -20,6 +20,72 @@ export interface AppConfig {
 }
 
 // =============================================================================
+// HR Policy Manager Types
+// =============================================================================
+
+export type PolicyStatus = 'Draft' | 'Compliant' | 'Needs Review'
+export type WorkflowStage = 'Discovery' | 'Generation' | 'Compliance'
+export type ComplianceLevel = 'Compliant' | 'Minor Issues' | 'Major Issues'
+
+export interface ChatMessage {
+  id: string
+  role: 'user' | 'agent'
+  content: string
+  timestamp: Date
+  agentName?: string
+}
+
+export interface Policy {
+  id: string
+  title: string
+  content: string
+  status: PolicyStatus
+  dateCreated: Date
+  lastModified: Date
+  policyType: string
+  scope: string
+}
+
+export interface PolicyRequirement {
+  policyType: string
+  scope: string
+  stakeholders: string[]
+  keyProvisions: string[]
+  edgeCases: string[]
+}
+
+export interface ComplianceFinding {
+  id: string
+  severity: 'critical' | 'warning' | 'info'
+  title: string
+  description: string
+  recommendation: string
+}
+
+export interface ComplianceReport {
+  score: number
+  level: ComplianceLevel
+  findings: ComplianceFinding[]
+  recommendations: string[]
+  lastChecked: Date
+}
+
+export interface PolicyCreationState {
+  stage: WorkflowStage
+  requirements: PolicyRequirement | null
+  policy: Policy | null
+  complianceReport: ComplianceReport | null
+  isLoading: boolean
+  error: string | null
+}
+
+export interface ChatMessageResponse {
+  role: 'user' | 'agent'
+  content: string
+  timestamp: string
+}
+
+// =============================================================================
 // SSE Event Types for Lyra Chat
 // =============================================================================
 
